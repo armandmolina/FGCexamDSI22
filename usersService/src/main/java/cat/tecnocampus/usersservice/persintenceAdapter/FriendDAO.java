@@ -1,15 +1,12 @@
 package cat.tecnocampus.usersservice.persintenceAdapter;
 
-import cat.tecnocampus.usersservice.application.appController.exception.UserDoesNotExistException;
+import cat.tecnocampus.usersservice.application.appUseCases.exception.UserDoesNotExistException;
 import cat.tecnocampus.usersservice.domain.Friends;
 import org.simpleflatmapper.jdbc.spring.JdbcTemplateMapperFactory;
 import org.simpleflatmapper.jdbc.spring.ResultSetExtractorImpl;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 
 @Repository

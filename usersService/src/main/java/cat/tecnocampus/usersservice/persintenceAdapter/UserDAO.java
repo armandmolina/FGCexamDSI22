@@ -1,7 +1,7 @@
 package cat.tecnocampus.usersservice.persintenceAdapter;
 
 
-import cat.tecnocampus.usersservice.application.appController.exception.UserDoesNotExistException;
+import cat.tecnocampus.usersservice.application.appUseCases.exception.UserDoesNotExistException;
 import cat.tecnocampus.usersservice.application.portsOut.UserPortOut;
 import cat.tecnocampus.usersservice.domain.User;
 import org.simpleflatmapper.jdbc.spring.JdbcTemplateMapperFactory;

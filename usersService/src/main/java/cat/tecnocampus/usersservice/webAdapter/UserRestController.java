@@ -1,7 +1,7 @@
 package cat.tecnocampus.usersservice.webAdapter;
 
 
-import cat.tecnocampus.usersservice.application.appController.UserController;
+import cat.tecnocampus.usersservice.application.appUseCases.UserUseCases;
 import cat.tecnocampus.usersservice.domain.Friends;
 import cat.tecnocampus.usersservice.domain.User;
 import org.springframework.http.MediaType;
@@ -11,41 +11,41 @@ import java.util.List;
 
 @RestController
 public class UserRestController  {
-    private UserController userController;
+    private UserUseCases userUseCases;
 
-    public UserRestController(UserController userController) {
-        this.userController = userController;
+    public UserRestController(UserUseCases userUseCases) {
+        this.userUseCases = userUseCases;
     }
 
     @GetMapping("/users")
     public List<User> getUsers() {
-        return userController.getUsers();
+        return userUseCases.getUsers();
     }
 
     @GetMapping("/users/{username}")
     public User getUser(@PathVariable String username) {
-        return userController.getUser(username);
+        return userUseCases.getUser(username);
     }
 
     @GetMapping("/users/{username}/friends")
     public Friends getAllFriends(@PathVariable String username) {
-        return userController.getFriends(username);
+        return userUseCases.getFriends(username);
     }
 
     @GetMapping(value = "/users/exists/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public boolean existsUser(@PathVariable String username,
                               @RequestParam(value = "delay", required = false, defaultValue = "0") int delay,
                               @RequestParam(value = "faultRatio", required = false, defaultValue = "0") int faultRatio) {
-        return userController.userExists(username, delay, faultRatio);
+        return userUseCases.userExists(username, delay, faultRatio);
     }
 
     @PostMapping("/users/{username}/friends/{friend}")
     public void saveFriends(@PathVariable String username, @PathVariable String friend) {
-        userController.addFriends(username, friend);
+        userUseCases.addFriends(username, friend);
     }
 
     @DeleteMapping("users/{username}")
     public void deleteUser(@PathVariable String username) {
-        userController.deleteUser(username);
+        userUseCases.deleteUser(username);
     }
 }

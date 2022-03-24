@@ -1,13 +1,11 @@
-package cat.tecnocampus.usersservice.application.appController;
+package cat.tecnocampus.usersservice.application.appUseCases;
 
-import cat.tecnocampus.usersservice.application.appController.exception.UserServiceBadLuchkException;
+import cat.tecnocampus.usersservice.application.appUseCases.exception.UserServiceBadLuchkException;
 import cat.tecnocampus.usersservice.application.portsIn.UserPortsIn;
 import cat.tecnocampus.usersservice.application.portsOut.FriendPortOut;
 import cat.tecnocampus.usersservice.application.portsOut.UserPortOut;
 import cat.tecnocampus.usersservice.domain.Friends;
 import cat.tecnocampus.usersservice.domain.User;
-import cat.tecnocampus.usersservice.persintenceAdapter.FriendDAO;
-import cat.tecnocampus.usersservice.persintenceAdapter.UserDAO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,11 +13,11 @@ import java.util.List;
 import java.util.Random;
 
 @Service
-public class UserController implements UserPortsIn {
+public class UserUseCases implements UserPortsIn {
     private UserPortOut userPortOut;
     private FriendPortOut friendPortOut;
 
-    public UserController(UserPortOut userPortOut, FriendPortOut friendPortOut) {
+    public UserUseCases(UserPortOut userPortOut, FriendPortOut friendPortOut) {
         this.userPortOut = userPortOut;
         this.friendPortOut = friendPortOut;
     }
@@ -55,6 +53,8 @@ public class UserController implements UserPortsIn {
         return userPortOut.existsUser(username);
     }
 
+    // TODO 3.1 Quan un usuari s'esborra s'ha d'enviar un missatge amb el ussername per indicar-ho. Recorda de seguir
+    //  l'arquitectura hexagonal
     @Override
     @Transactional
     public void deleteUser(String username) {

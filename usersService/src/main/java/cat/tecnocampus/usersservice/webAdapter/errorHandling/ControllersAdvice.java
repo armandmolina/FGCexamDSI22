@@ -1,10 +1,9 @@
 package cat.tecnocampus.usersservice.webAdapter.errorHandling;
 
-import cat.tecnocampus.usersservice.application.appController.exception.UserDoesNotExistException;
-import cat.tecnocampus.usersservice.application.appController.exception.UserServiceBadLuchkException;
+import cat.tecnocampus.usersservice.application.appUseCases.exception.UserDoesNotExistException;
+import cat.tecnocampus.usersservice.application.appUseCases.exception.UserServiceBadLuchkException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

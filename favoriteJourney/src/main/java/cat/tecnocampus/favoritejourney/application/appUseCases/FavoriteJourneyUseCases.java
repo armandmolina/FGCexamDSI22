@@ -77,8 +77,8 @@ public class FavoriteJourneyUseCases implements cat.tecnocampus.favoritejourney.
         return favoriteJourneyPort.findFavoriteJourneys(username);
     }
 
-    //TODO 3: quan arribi el missatge de que un usuari s'ha esborrat, s'ha de cridar aquest mètode per esborrar els seus
-    //  favorite journeys
+    //TODO 3.2: quan arribi el missatge de que un usuari s'ha esborrat, s'ha de cridar aquest mètode per esborrar els seus
+    //  favorite journeys. Recorda de serguir l'arquitectura hexagonal
     @Override
     public void deleteFavoriteJourneys(String username) {
         favoriteJourneyPort.deleteFavoriteJourney(username);
