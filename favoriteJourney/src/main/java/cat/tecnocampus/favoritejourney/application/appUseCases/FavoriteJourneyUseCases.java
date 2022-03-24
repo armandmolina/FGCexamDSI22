@@ -50,7 +50,7 @@ public class FavoriteJourneyUseCases implements cat.tecnocampus.favoritejourney.
         // la bbdd el favorite journey amb el checked a false.
         // Si heu implementat el primer exercici el circuit breaker el posareu a l'adaptador que heu creat
         // Us pot convenir que el mètode userExists retorni un string amb un d'aquest tres valors: "true", "false" o "unchecked"
-        // En aquest punt (i no a l'adaptador de sotida (si heu fet el primer exercici) haureu de:
+        // En aquest lloc del codi (i no a l'adaptador de sortida, si heu fet el primer exercici) haureu de:
         //    Gravar el journey amb checked = true si el mètode userExists retorna "true"
         //    No gravar el journey si el mètode userExists retorna "false"
         //    Gravar el journey amb checked = false si el mètode userExists retorna "uncheked"
@@ -84,12 +84,12 @@ public class FavoriteJourneyUseCases implements cat.tecnocampus.favoritejourney.
         favoriteJourneyPort.deleteFavoriteJourney(username);
     }
 
-    //TODO 4.1: si implementeu el discovery service feu servir l'adreça que us dóna aquest en comptes d'una fixa
+    //TODO 4.1: si implementeu el discovery service feu servir l'adreça del microservei d'usuaris que us dóna aquest en comptes
+    // de la fixa que teniu al codi
     //TODO 4.2: si implementeu el discovery service voldreu que el restTemplate estigui balancejat, és a dir, si hi ha més d'una instància
     // del microservei d'usuaris que les crides es vagin repartint entre ells
 
-
-    //TODO 1: heu de refactoritzar aquesta crida REST (o tot el mètode) de manera que segueixi l'arquitecutra hexagonal.
+    //TODO 1: heu de refactoritzar aquesta crida REST (o tot el mètode) de manera que segueixi l'arquitectura hexagonal.
     // Aquesta crida s'hauria de fer en un adaptador i la seva interfície hauria d'estar en un port de sortida.
     private boolean userExists(String username, int delay, int faultRatio) {
         String url = "http://localhost:8080/users/exists/" + username + "?delay=" + delay + "&faultRatio=" + faultRatio;

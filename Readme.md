@@ -45,7 +45,7 @@ té mapping el cas d'ús de creació dels favorite journeys (però això no té 
 * Ara mateix només hi ha implementada una comunicació via REST d’un cap a l’altre i està fet sense tenir en compte l’arquitectura hexagonal,
 és a dir, sense usar ports i adaptadors.
 * En aquesta comunicació ja implementada el microservei de *favorite journeys*, en el moment de creació d'un journey nou, comprova si l'userName realment 
-existeix entre els usuaris. Si és així, la nota es crea amb l'atribut *checked* a cert. Si l'usuari no existeix aleshores favorite journey no es crea.
+existeix entre els usuaris. Si és així, el favority journey es crea amb l'atribut *checked* a cert. Si l'usuari no existeix aleshores favorite journey no es crea.
 
 #### Exemples de crides
 **GET** per llistar usuaris, amics, estacions i favorite journeys
@@ -59,7 +59,7 @@ existeix entre els usuaris. Si és així, la nota es crea amb l'atribut *checked
 **POST** per crear favorite journeys de l'usuari *username*
 * http://localhost:8081/users/{username}/favoriteJourneys
   
-On al body posarem el favorite journey que volem crear
+On al body posarem el favorite journey que volem crear. Per exemple:
 ```
 {
 	"origin": "Lleida-Pirineus",
@@ -72,12 +72,12 @@ On al body posarem el favorite journey que volem crear
          ]
 }
 ```
-* Hi ha altres post però no ens interessen per l'examen
+* Hi ha altres crides post implementades, però no ens interessen per l'examen
 
 **DELETE** per esborrar usuaris
 * http://localhost:8080/users/{username}
 
-On s'esborra l'usuari *username*. **Atenció** perquè ara mateix quan s'esborra un usuari NO s'esborren els seus favorite journeys!!!
+On s'esborra l'usuari *username*. **Atenció** perquè ara mateix quan s'esborra un usuari **NO** s'esborren els seus favorite journeys!!!
 
 ## Què heu de fer? 
 Heu d'implementar els següents exercicis. Són obligatoris els TODO 1, TODO 2 i TODO 3. I heu d'escollir si voleu fer 
@@ -86,15 +86,15 @@ i obtenir un 12, una nota superior a 10, que pot anar bé de cara a fer la mitja
 
 * **TODO 1:** (Val 2 punts) Fer que la comunicació via REST esmentada anteriorment, i que ja està implementada, segueixi l’arquitectura hexagonal. És a dir que hi hagi el port i l'adaptador pertinents.
   Recorda que en aquesta comunicació el microservei de favorite journey pregunta al microservei d'usuaris si l'usuari del journey existeix.
-* **TODO 2:** (Val 3 punts) Embolcallar la comunicació del punt anterior amb un *circuit breaker* de manera que quan el circuit estigui obert  
-  el journey es crei igualment però amb l'atribut **checked** a false. D'aquesta forma aconseguim crear notes noves encara que el 
+* **TODO 2:** (Val 3 punts) Embolcallar la comunicació del punt anterior amb un *circuit breaker* de manera que quan el circuit estigui obert
+  el journey es crei igualment però amb l'atribut **checked** a false. D'aquesta forma aconseguim crear favorite journeys nous encara que el 
   microservei d'usuaris estigui caigut. En un procediment de tipus batch posterior es podria comprovar l'usuari del journey i posar el checked a true 
   (però això és una història per un altre dia)
 * **TODO 3:** (Val 3 punts) Volem que quan s'esborra un usuari també s'esborrin tots els seus favorite journeys. Per fer-ho el microservei d'usuaris enviarà 
   un missatge asíncron al de favorite journeys tot indicant el *userName* del que s'han d'esborrar els journeys. Heu de tenir en compte que si hi ha més d'una 
   instància del microservei de jouneys només una rebi el missatge.
   Si voleu treure puntuació màxima en aquest exrcici heu de seguir l'arquitectura hexagonal, és a dir, implementar els ports i els adaptadors pertinents.
-  El missatge pot ser in simple String amb el nom d'usuari o podeu crear una classe "contenidora" del missatge dins dels ports. Qualsevol
+  El missatge pot ser un simple String amb el nom d'usuari o podeu crear una classe "contenidora" del missatge dins dels ports. Qualsevol
   de les dues opcions és bona i tindrà la mateixa puntuació.
 * **TODO 4:** (Val 2 punts) Afegir un discovery service. Us heu d'assegurar que el restTemplate del primer i segon exercici està balancejat (laodbalanced) 
 * **TODO 5:** (Val 2 punts) Afegir un edge (gateway) service que redireccioni les crides al microservei pertinent. 
