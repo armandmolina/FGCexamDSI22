@@ -1,0 +1,30 @@
+###
+GET http://localhost:8080/users
+###
+
+GET http://localhost:8080/users/tina
+###
+GET http://localhost:8080/users/exists/tina
+###
+GET http://localhost:8081/stations
+###
+GET http://localhost:8081/stations/La Pobla de Segur
+###
+GET http://localhost:8081/users/tina/favoriteJourneys
+###
+POST  http://localhost:8081/users/tina/favoriteJourneys
+Content-Type: application/json
+
+
+{
+	"origin": "Lleida-Pirineus",
+	"destination": "Alcoletge",
+	"dayTimes": [
+        {"dayOfWeek" : "Monday",
+         "time" : "12:50"},
+         {"dayOfWeek" : "Tuesday",
+         "time" : "13:50"}
+         ]
+}
+###
+DELETE http://localhost:8080/users/tina

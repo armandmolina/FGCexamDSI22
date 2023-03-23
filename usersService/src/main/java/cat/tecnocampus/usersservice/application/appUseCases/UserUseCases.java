@@ -2,6 +2,7 @@ package cat.tecnocampus.usersservice.application.appUseCases;
 
 import cat.tecnocampus.usersservice.application.appUseCases.exception.UserServiceBadLuchkException;
 import cat.tecnocampus.usersservice.application.portsIn.UserPortsIn;
+import cat.tecnocampus.usersservice.application.portsOut.FavoriteJourneyPort;
 import cat.tecnocampus.usersservice.application.portsOut.FriendPortOut;
 import cat.tecnocampus.usersservice.application.portsOut.UserPortOut;
 import cat.tecnocampus.usersservice.domain.Friends;
@@ -16,10 +17,12 @@ import java.util.Random;
 public class UserUseCases implements UserPortsIn {
     private UserPortOut userPortOut;
     private FriendPortOut friendPortOut;
+    private FavoriteJourneyPort favoriteJourneyPort;
 
-    public UserUseCases(UserPortOut userPortOut, FriendPortOut friendPortOut) {
+    public UserUseCases(UserPortOut userPortOut, FriendPortOut friendPortOut, FavoriteJourneyPort favoriteJourneyPort) {
         this.userPortOut = userPortOut;
         this.friendPortOut = friendPortOut;
+        this.favoriteJourneyPort = favoriteJourneyPort;
     }
 
     @Override
@@ -60,6 +63,7 @@ public class UserUseCases implements UserPortsIn {
     public void deleteUser(String username) {
         friendPortOut.deleteFriends(username);
         userPortOut.deleteUser(username);
+        favoriteJourneyPort.deleteUserFavoriteJourneys(username);
     }
 
     private void simulateDelay(int delay) {

@@ -5,9 +5,9 @@ import cat.tecnocampus.favoritejourney.application.appUseCases.exceptions.UserDo
 import cat.tecnocampus.favoritejourney.application.portsOut.FavoriteJourneyPort;
 import cat.tecnocampus.favoritejourney.application.portsOut.JourneyPort;
 import cat.tecnocampus.favoritejourney.application.portsOut.StationPort;
+import cat.tecnocampus.favoritejourney.application.portsOut.UserServicePort;
 import cat.tecnocampus.favoritejourney.domain.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,14 +17,14 @@ public class FavoriteJourneyUseCases implements cat.tecnocampus.favoritejourney.
     private StationPort stationPort;
     private FavoriteJourneyPort favoriteJourneyPort;
     private JourneyPort journeyPort;
-    private RestTemplate restTemplate;
 
-    public FavoriteJourneyUseCases(StationPort stationPort, FavoriteJourneyPort favoriteJourneyPort, JourneyPort journeyPort,
-                                   RestTemplate restTemplate) {
+    private UserServicePort userServicePort;
+
+    public FavoriteJourneyUseCases(StationPort stationPort, FavoriteJourneyPort favoriteJourneyPort, JourneyPort journeyPort, UserServicePort userServicePort) {
         this.stationPort = stationPort;
         this.favoriteJourneyPort = favoriteJourneyPort;
         this.journeyPort = journeyPort;
-        this.restTemplate = restTemplate;
+        this.userServicePort = userServicePort;
     }
 
     @Override
@@ -55,9 +55,11 @@ public class FavoriteJourneyUseCases implements cat.tecnocampus.favoritejourney.
         //    No gravar el journey si el mètode userExists retorna "false"
         //    Gravar el journey amb checked = false si el mètode userExists retorna "uncheked"
         boolean checked = true;
-        if (!userExists(username, delay, faultRatio)) {
+        String result=userExists(username, delay, faultRatio);
+        if (result.equals("false")) {
             throw new UserDoesNotExistException(username);
         }
+        else if(result.equals("unchecked")) checked=false;
 
         favoriteJourneyPort.saveFavoriteJourney(favoriteJourney,username, checked);
     }
@@ -91,8 +93,10 @@ public class FavoriteJourneyUseCases implements cat.tecnocampus.favoritejourney.
 
     //TODO 1: heu de refactoritzar aquesta crida REST (o tot el mètode) de manera que segueixi l'arquitectura hexagonal.
     // Aquesta crida s'hauria de fer en un adaptador i la seva interfície hauria d'estar en un port de sortida.
-    private boolean userExists(String username, int delay, int faultRatio) {
-        String url = "http://localhost:8080/users/exists/" + username + "?delay=" + delay + "&faultRatio=" + faultRatio;
-        return restTemplate.getForObject(url, Boolean.class);
+
+    private String userExists(String username, int delay, int faultRatio) {
+        return userServicePort.userExists(username,delay,faultRatio);
     }
+
+
 }
